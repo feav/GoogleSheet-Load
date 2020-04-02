@@ -5,19 +5,17 @@
 		<meta charset="utf-8">
 		<title>Une petite démo</title>
 	  <style>
-	  	body{
-	  		padding: 0;
-				margin: 0;
-				width: 100%;
-				height: 100vh;
-	  	}
-	    /*  <span class="metadata-marker" style="display: none;" data-region_tag="css"></span>       Set the size of the div element that contains the map */
-	    #map {
-	      height: 100%;
-	      /* The height is 400 pixels */
-	      width: 100%;
-	      /* The width is the width of the web page */
-	    }
+	  	/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
 	    .gm-style .gm-style-iw-c{
 	    	max-width: 15rem !important;
 	    }
@@ -43,6 +41,7 @@
 	      function addMarkerInfo() {
 	        /* set up XMLHttpRequest */
 					var url = "https://chat.belsis.cm/map/GoogleSheet-Load/maps/departement.xlsx";
+					// var url = "http://localhost/openstreetmap/maps/departement.xlsx";
 					var oReq = new XMLHttpRequest();
 					oReq.open("GET", url, true);
 					oReq.responseType = "arraybuffer";
@@ -69,6 +68,8 @@
 					    raw: true
 					  });
 					  console.log(markers);
+
+					  var marks = [];
 
 					  for ( var i=0; i < markers.length; ++i )
 					  {
@@ -101,6 +102,8 @@
 	                map: map
 	            });
 
+	            marks[i] = marker;
+
 	            const infowindow = new google.maps.InfoWindow({
 	              content: contentString,
 	              maxWidth: 200
@@ -122,6 +125,8 @@
 	            //   InforObj[0] = infowindow;
 	            // });
 					  }
+					  var markerCluster = new MarkerClusterer(map, marks,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 					}
 
 					oReq.send();
@@ -139,11 +144,13 @@
 	      }
 
 	      function initMap() {
+
 	        map = new google.maps.Map(document.getElementById('map'), {
-	         	zoom: 6,
+	         	zoom: 4,
 	          center: centerCords
 	        });
 	        addMarkerInfo();
+
 	      }
 	  </script>
 	  <script src="https://cdn.jsdelivr.net/npm/alasql@0.4.11"></script>
@@ -155,7 +162,8 @@
 	  <!--The div element for the map -->
 	  <div id="map"></div>
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh-g4_ArpCZVgU0s0vjWgutehIUTn-cxU"></script>
+	  <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDlHJyOaa1i7sl_VvSJ-MR3w5uAT3M_UgQ"></script>
 	</body>
 </html>
  
