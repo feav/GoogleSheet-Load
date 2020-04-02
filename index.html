@@ -42,7 +42,7 @@
 
 	      function addMarkerInfo() {
 	        /* set up XMLHttpRequest */
-					var url = "http://localhost/openstreetmap/maps/Auto  par département dernier mars 2019.xlsx";
+					var url = "https://chat.belsis.cm/map/GoogleSheet-Load/maps/departement.xlsx";
 					var oReq = new XMLHttpRequest();
 					oReq.open("GET", url, true);
 					oReq.responseType = "arraybuffer";
@@ -91,7 +91,7 @@
 					       </p>
 				     	</div>`;
 
-				     	console.log(contentString);
+				     	// console.log(contentString);
 
 	            const marker = new google.maps.Marker({
 	                position:{
