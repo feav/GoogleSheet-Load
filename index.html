@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta lang="fr">
+		<meta charset="utf-8">
+		<title>Une petite démo</title>
+	  <style>
+	  	body{
+	  		padding: 0;
+				margin: 0;
+				width: 100%;
+				height: 100vh;
+	  	}
+	    /*  <span class="metadata-marker" style="display: none;" data-region_tag="css"></span>       Set the size of the div element that contains the map */
+	    #map {
+	      height: 100%;
+	      /* The height is 400 pixels */
+	      width: 100%;
+	      /* The width is the width of the web page */
+	    }
+	    .gm-style .gm-style-iw-c{
+	    	max-width: 15rem !important;
+	    }
+	    .gm-style .gm-style-iw{
+	    	font-size: 13px;
+	    }
+	    .gm-style .gm-style-iw-d{
+	    	max-width: 100% !important;
+	    }
+	  </style>
+	  <script>
+	      var map;
+	      var InforObj = [];
+	      var centerCords = {
+	          lat: 47.074715,
+	          lng: 2.338950
+	      };
+
+	      window.onload = function () {
+	          initMap();
+	      };
+
+	      function addMarkerInfo() {
+	        /* set up XMLHttpRequest */
+					var url = "http://localhost/openstreetmap/maps/Auto  par département dernier mars 2019.xlsx";
+					var oReq = new XMLHttpRequest();
+					oReq.open("GET", url, true);
+					oReq.responseType = "arraybuffer";
+
+					oReq.onload = function(e) {
+					  var arraybuffer = oReq.response;
+
+					  /* convert data to binary string */
+					  var data = new Uint8Array(arraybuffer);
+					  var arr = new Array();
+					  for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+					  var bstr = arr.join("");
+
+					  /* Call XLSX */
+					  var workbook = XLSX.read(bstr, {
+					    type: "binary"
+					  });
+
+					  /* DO SOMETHING WITH workbook HERE */
+					  var first_sheet_name = workbook.SheetNames[0];
+					  /* Get worksheet */
+					  var worksheet = workbook.Sheets[first_sheet_name];
+					  var markers = XLSX.utils.sheet_to_json(worksheet, {
+					    raw: true
+					  });
+					  console.log(markers);
+
+					  for ( var i=0; i < markers.length; ++i )
+					  {
+					  	var contentString =
+					  	`<div id="content">
+					  		<h1>` + markers[i]["Département"] + `</h1>
+	              <p>
+	              	<b>Administrativement actifs nb : </b> `+markers[i]["Administrativement actifs nb"]+`<br/>
+	              	<b>Economiquement actifs : </b> `+markers[i]["Economiquement actifs"]+`<br/>
+	              	<b>Région : </b> `+markers[i]["Région"]+`<br/>
+	              	<b>Code du département : </b> `+markers[i]["Code Département"]+`<br/>
+					        <b>Commune : </b> `+markers[i]["Commune"]+`<br/>
+					        <b>Année : </b> `+markers[i]["Année"]+`<br/>
+					        <b>Trimestre : </b> `+markers[i]["Trimestre"]+`<br/>
+					        <b>Dernier jour du trimestre : </b> `+markers[i]["Dernier jour du trimestre"]+`<br/>
+					        <b>Immatriculations : </b> `+markers[i]["Immatriculations"]+`<br/>
+					        <b>Radiations : </b> `+markers[i]["Radiations"]+`<br/>
+					        <b>Chiffres d'affaires : </b> `+markers[i]["Chiffres d'affaires"]+`<br/>
+					        <b>Code région : </b> `+markers[i]["Code région"]+`<br/>
+					       </p>
+				     	</div>`;
+
+				     	console.log(contentString);
+
+	            const marker = new google.maps.Marker({
+	                position:{
+		                lat: parseFloat(markers[i]['Longitude']),
+		                lng: parseFloat(markers[i]['Latitude'])
+	           			},
+	                map: map
+	            });
+
+	            const infowindow = new google.maps.InfoWindow({
+	              content: contentString,
+	              maxWidth: 200
+	            });
+
+	            marker.addListener('click', function () {
+	              closeOtherInfo();
+	              infowindow.open(marker.get('map'), marker);
+	              InforObj[0] = infowindow;
+	            });
+	            // marker.addListener('mouseover', function () {
+	            //  	closeOtherInfo();
+	            //   infowindow.open(marker.get('map'), marker);
+	            //   InforObj[0] = infowindow;
+	            // });
+	            // marker.addListener('mouseout', function () {
+	            //   closeOtherInfo();
+	            //   infowindow.close();
+	            //   InforObj[0] = infowindow;
+	            // });
+					  }
+					}
+
+					oReq.send();
+	      }
+
+	      function closeOtherInfo() {
+	          if (InforObj.length > 0) {
+	              /* detach the info-window from the marker ... undocumented in the API docs */
+	              InforObj[0].set("marker", null);
+	              /* and close it */
+	              InforObj[0].close();
+	              /* blank the array */
+	              InforObj.length = 0;
+	          }
+	      }
+
+	      function initMap() {
+	        map = new google.maps.Map(document.getElementById('map'), {
+	         	zoom: 6,
+	          center: centerCords
+	        });
+	        addMarkerInfo();
+	      }
+	  </script>
+	  <script src="https://cdn.jsdelivr.net/npm/alasql@0.4.11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.0/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.20.1/moment.js"></script>
+	</head>
+	 
+	<body>
+	  <!--The div element for the map -->
+	  <div id="map"></div>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh-g4_ArpCZVgU0s0vjWgutehIUTn-cxU"></script>
+	</body>
+</html>
+ 
