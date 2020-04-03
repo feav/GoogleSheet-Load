@@ -10,6 +10,9 @@
 		#map {
 			height: 100%;
 		}
+		#content h1{
+			margin:0;
+		}
 		/* Optional: Makes the sample page fill the window. */
 		html, body {
 			height: 100%;
@@ -17,8 +20,8 @@
 			padding: 0;
 		}
 	    .gm-style .gm-style-iw-c {
-		    max-width: 30vw !important;
-		    width: 30vw !important;
+		    max-width: 100% !important;
+		    width: 4%;
 		}
 	    .gm-style .gm-style-iw{
 	    	font-size: 13px;
@@ -42,8 +45,8 @@
 
 	      function addMarkerInfo() {
 	        /* set up XMLHttpRequest */
-					var url = "https://chat.belsis.cm/map/GoogleSheet-Load/maps/departement.xlsx";
-					// var url = "http://localhost/openstreetmap/maps/departement.xlsx";
+					// var url = "https://chat.belsis.cm/map/GoogleSheet-Load/maps/departement.xlsx";
+					var url = "http://localhost/openstreetmap/maps/departement.xlsx";
 					var oReq = new XMLHttpRequest();
 					oReq.open("GET", url, true);
 					oReq.responseType = "arraybuffer";
