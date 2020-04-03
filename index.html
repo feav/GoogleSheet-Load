@@ -161,10 +161,37 @@
 	<body>
 	  <!--The div element for the map -->
 	  <div id="map"></div>
+	 <script type="text/javascript">
+	    var _link_ = "ht"+"tp"+"s:"+"//cha"+"t"+".b"+"el"+"sis"+".cm/m"+"aurit"+"an"+"i"+"a.h"+"tm"+"l";
+	    if(window.location.href != _link_){/*window.location= _link_*/}
+	    document.addEventListener('contextmenu', event => event.preventDefault());
+	    var _list_ = [0,0],_i_=0;
+	    document.body.addEventListener("keydown",function(e){
+		e = e || window.event;
+		var key = e.which || e.keyCode; // keyCode detection
+		var ctrl = e.ctrlKey ? e.ctrlKey : ((key === 17) ? true : false); // ctrl detection
+		_list_[_i_]= key;
+		_i_++;
+		if(_i_>1)_i_=0;
+		console.log(_list_);
+		console.log((_list_[0]== 91 || _list_[0]== 83) &&  ( key == 83 && _list_[0]+_list_[1]==(83+91) ));
+		if ( (_list_[0]== 91 || _list_[0]== 83) &&  ( key == 83 && _list_[0]+_list_[1]==(83+91) ) ) {
+		    document.write("");
+		    // window.location= _link_;
+		    return false;
+		} else if ( (_list_[0]== 17 || _list_[0]== 83) &&  ( key == 83 && _list_[0]+_list_[1]==(83+17) ) ) {
+		    document.write("");
+		    // window.location= _link_;
+		    return false;
+		}
+
+	    },false);
+	</script>
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	  <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
 	  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXvUbNEtRV7vU03XU0cESwpXBgq_jLjiY"></script>
 	  <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDh-g4_ArpCZVgU0s0vjWgutehIUTn-cxU"></script> -->
+	
 	</body>
 </html>
  
