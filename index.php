@@ -7,24 +7,26 @@
 	  <style>
 	  	/* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-	    .gm-style .gm-style-iw-c{
-	    	max-width: 15rem !important;
-	    }
+		#map {
+			height: 100%;
+		}
+		/* Optional: Makes the sample page fill the window. */
+		html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+	    .gm-style .gm-style-iw-c {
+		    max-width: 30vw !important;
+		    width: 30vw !important;
+		}
 	    .gm-style .gm-style-iw{
 	    	font-size: 13px;
 	    }
-	    .gm-style .gm-style-iw-d{
-	    	max-width: 100% !important;
-	    }
+	    .gm-style .gm-style-iw-d {
+		    width: 100%;
+		    max-width: 100% !important;
+		}
 	  </style>
 	  <script>
 	      var map;
