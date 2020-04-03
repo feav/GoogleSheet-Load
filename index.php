@@ -46,7 +46,7 @@
 	      function addMarkerInfo() {
 	        /* set up XMLHttpRequest */
 					var url = "https://chat.belsis.cm/map/GoogleSheet-Load/maps/departement.xlsx";
-					var url = "http://localhost/openstreetmap/maps/departement.xlsx";
+					// var url = "http://localhost/openstreetmap/maps/departement.xlsx";
 					var oReq = new XMLHttpRequest();
 					oReq.open("GET", url, true);
 					oReq.responseType = "arraybuffer";
